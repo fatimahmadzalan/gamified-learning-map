@@ -6,13 +6,15 @@
     body {
       font-family: Arial;
       text-align: center;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
+      background: linear-gradient(to right, #43cea2, #185a9d);
+      color: white;
     }
     .card {
       background: white;
+      color: black;
       padding: 20px;
       margin: 40px auto;
-      width: 70%;
+      width: 75%;
       border-radius: 15px;
       box-shadow: 0 0 15px gray;
     }
@@ -22,61 +24,80 @@
       cursor: pointer;
       border-radius: 8px;
       border: none;
+      font-weight: bold;
     }
-    h2 {
-      margin-top: 20px;
-      color: #333;
+    .locked {
+      background: #ccc;
+      cursor: not-allowed;
     }
   </style>
 </head>
 
 <body>
 
+<h1> Tourism Simulation Game</h1>
+<h3>XP: <span id="xp">0</span></h3>
+
 <div class="card">
-  <h1> Tourism Simulation Game</h1>
-  <p>You are a Tourism Planner in Malaysia. Make smart decisions!</p>
+  <p>Complete levels to unlock the next stage!</p>
 
-  <h3>Choose a Level:</h3>
+  <button id="lvl1" onclick="completeLevel(1)"> Level 1: Basics</button>
+  <button id="lvl2" class="locked"> Level 2: Global</button>
+  <button id="lvl3" class="locked"> Level 3: Climate</button>
+  <button id="lvl4" class="locked"> Level 4: Culture</button>
+  <button id="lvl5" class="locked"> Level 5: Development</button>
+  <button id="lvl6" class="locked"> Level 6: Sustainability</button>
 
-  <button onclick="basics()"> Level 1: Basics</button>
-  <button onclick="global()"> Level 2: Global</button>
-  <button onclick="climate()"> Level 3: Climate</button>
-  <button onclick="culture()"> Level 4: Culture</button>
-  <button onclick="talc()"> Level 5: Development</button>
-  <button onclick="eco()"> Level 6: Sustainability</button>
-
-  <h2 id="result"> Your result will appear here</h2>
+  <h2 id="result"> Start Level 1</h2>
 </div>
 
 <script>
-function basics() {
-  document.getElementById("result").innerHTML =
-  " You understood tourism system! +10 XP";
-}
+let xp = 0;
 
-function global() {
-  document.getElementById("result").innerHTML =
-  " Smart strategy! Tourist arrivals increased!";
-}
+function completeLevel(level) {
 
-function climate() {
-  document.getElementById("result").innerHTML =
-  " Wrong season! Tourism demand dropped!";
-}
+  if(level === 1) {
+    xp += 10;
+    document.getElementById("lvl2").classList.remove("locked");
+    document.getElementById("lvl2").onclick = function(){completeLevel(2)};
+    document.getElementById("result").innerHTML = " Basics mastered! +10 XP";
+  }
 
-function culture() {
-  document.getElementById("result").innerHTML =
-  " Cultural tourism success! Sustainable growth!";
-}
+  else if(level === 2) {
+    xp += 15;
+    document.getElementById("lvl3").classList.remove("locked");
+    document.getElementById("lvl3").onclick = function(){completeLevel(3)};
+    document.getElementById("result").innerHTML = " Global strategy success! +15 XP";
+  }
 
-function talc() {
-  document.getElementById("result").innerHTML =
-  " Destination reached stagnation stage!";
-}
+  else if(level === 3) {
+    xp += 15;
+    document.getElementById("lvl4").classList.remove("locked");
+    document.getElementById("lvl4").onclick = function(){completeLevel(4)};
+    document.getElementById("result").innerHTML = " Climate decision learned! +15 XP";
+  }
 
-function eco() {
-  document.getElementById("result").innerHTML =
-  " Eco-tourism success! Long-term sustainability achieved!";
+  else if(level === 4) {
+    xp += 20;
+    document.getElementById("lvl5").classList.remove("locked");
+    document.getElementById("lvl5").onclick = function(){completeLevel(5)};
+    document.getElementById("result").innerHTML = " Culture strategy worked! +20 XP";
+  }
+
+  else if(level === 5) {
+    xp += 20;
+    document.getElementById("lvl6").classList.remove("locked");
+    document.getElementById("lvl6").onclick = function(){completeLevel(6)};
+    document.getElementById("result").innerHTML = " Development mastered! +20 XP";
+  }
+
+  else if(level === 6) {
+    xp += 30;
+    document.getElementById("result").innerHTML =
+    " Sustainability achieved!  YOU WIN ";
+  }
+
+  document.getElementById("xp").innerHTML = xp;
 }
 </script>
 
