@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tourism Simulation Game</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f4f4;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 40px auto;
+      width: 60%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1> Tourism Simulation Game</h1>
+  <p>You are a Tourism Planner in Malaysia.</p>
+  <p>Choose your destination strategy:</p>
+
+  <button onclick="beach()"> Promote Beach Tourism</button>
+  <button onclick="culture()"> Promote Cultural Tourism</button>
+
+  <h2 id="result"></h2>
+</div>
+
+<script>
+function beach() {
+  document.getElementById("result").innerHTML =
+  " High tourist arrivals but environmental damage increased ";
+}
+
+function culture() {
+  document.getElementById("result").innerHTML =
+  " Moderate growth with strong cultural preservation ";
+}
+</script>
+
+</body>
+</html>
