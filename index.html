@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tourism Map Game</title>
+  <title>Interactive Tourism Map Game</title>
+
   <style>
     body {
       font-family: Arial;
       text-align: center;
-      background: linear-gradient(to right, #2193b0, #6dd5ed);
+      background: linear-gradient(to right, #00c6ff, #0072ff);
       color: white;
     }
 
@@ -19,18 +20,24 @@
       width: 90%;
       height: 500px;
       margin: 30px auto;
-      background: #e0f7fa;
+      background: #e3f2fd;
       border-radius: 20px;
+      overflow: hidden;
     }
 
-    .level {
+    .spot {
       position: absolute;
-      padding: 15px;
+      padding: 12px 16px;
       border-radius: 50%;
       background: #ffcc00;
       color: black;
-      cursor: pointer;
       font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .spot:hover {
+      transform: scale(1.2);
     }
 
     .locked {
@@ -38,14 +45,13 @@
       cursor: not-allowed;
     }
 
-    #lvl1 { top: 50px; left: 50px; }
-    #lvl2 { top: 150px; left: 200px; }
-    #lvl3 { top: 300px; left: 100px; }
-    #lvl4 { top: 100px; right: 200px; }
-    #lvl5 { top: 250px; right: 100px; }
-    #lvl6 { bottom: 50px; left: 45%; }
+    #langkawi { top: 80px; left: 80px; }
+    #paris { top: 120px; right: 120px; }
+    #tokyo { bottom: 120px; left: 120px; }
+    #dubai { bottom: 80px; right: 80px; }
+    #ny { top: 200px; left: 45%; }
 
-    .card {
+    .panel {
       background: white;
       color: black;
       padding: 20px;
@@ -53,80 +59,86 @@
       margin: auto;
       border-radius: 15px;
     }
+
+    h2 {
+      margin-top: 10px;
+    }
   </style>
+
 </head>
 
 <body>
 
-<h1> Tourism Geography Adventure</h1>
+<h1>🗺️ Tourism Geography Interactive Map</h1>
 <h3>XP: <span id="xp">0</span></h3>
 
 <div class="map">
 
-  <div id="lvl1" class="level" onclick="play(1)">1</div>
-  <div id="lvl2" class="level locked">2</div>
-  <div id="lvl3" class="level locked">3</div>
-  <div id="lvl4" class="level locked">4</div>
-  <div id="lvl5" class="level locked">5</div>
-  <div id="lvl6" class="level locked">6</div>
+  <div id="langkawi" class="spot" onclick="visit('langkawi')">🏝️</div>
+  <div id="paris" class="spot locked">🗼</div>
+  <div id="tokyo" class="spot locked">🏯</div>
+  <div id="dubai" class="spot locked">🌆</div>
+  <div id="ny" class="spot locked">🗽</div>
 
 </div>
 
-<div class="card">
-  <h2 id="text"> Click Level 1 to start</h2>
+<div class="panel">
+  <h2 id="story">👉 Click Langkawi to start your journey</h2>
 </div>
 
 <script>
 let xp = 0;
 
-function play(level) {
-
-  if(level === 1) {
-    xp += 10;
-    unlock(2);
-    show(" You learned tourism basics! +10 XP");
-  }
-
-  else if(level === 2) {
-    xp += 15;
-    unlock(3);
-    show(" Global tourism mastered! +15 XP");
-  }
-
-  else if(level === 3) {
-    xp += 15;
-    unlock(4);
-    show(" Climate impact understood! +15 XP");
-  }
-
-  else if(level === 4) {
-    xp += 20;
-    unlock(5);
-    show(" Cultural tourism success! +20 XP");
-  }
-
-  else if(level === 5) {
-    xp += 20;
-    unlock(6);
-    show(" Development strategy applied! +20 XP");
-  }
-
-  else if(level === 6) {
-    xp += 30;
-    show(" Sustainability achieved!  YOU WIN ");
-  }
-
+function updateXP(points) {
+  xp += points;
   document.getElementById("xp").innerHTML = xp;
 }
 
-function unlock(level) {
-  let btn = document.getElementById("lvl" + level);
-  btn.classList.remove("locked");
-  btn.onclick = function(){play(level)};
+function unlock(id, func) {
+  let spot = document.getElementById(id);
+  spot.classList.remove("locked");
+  spot.onclick = func;
 }
 
-function show(message) {
-  document.getElementById("text").innerHTML = message;
+function visit(place) {
+
+  if(place === "langkawi") {
+    updateXP(10);
+    document.getElementById("story").innerHTML =
+    " Langkawi: You chose eco-tourism development.";
+
+    unlock("paris", function(){ visit("paris"); });
+  }
+
+  else if(place === "paris") {
+    updateXP(15);
+    document.getElementById("story").innerHTML =
+    " Paris: Cultural tourism boosts global image.";
+
+    unlock("tokyo", function(){ visit("tokyo"); });
+  }
+
+  else if(place === "tokyo") {
+    updateXP(15);
+    document.getElementById("story").innerHTML =
+    " Tokyo: Technology-driven tourism innovation.";
+
+    unlock("dubai", function(){ visit("dubai"); });
+  }
+
+  else if(place === "dubai") {
+    updateXP(20);
+    document.getElementById("story").innerHTML =
+    " Dubai: Luxury tourism and mega development.";
+
+    unlock("ny", function(){ visit("ny"); });
+  }
+
+  else if(place === "ny") {
+    updateXP(30);
+    document.getElementById("story").innerHTML =
+    " New York: Global tourism hub mastered!  YOU WIN ";
+  }
 }
 </script>
 
