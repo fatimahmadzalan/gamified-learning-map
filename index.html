@@ -1,103 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tourism Simulation Game</title>
+  <title>Tourism Scenario Game</title>
   <style>
     body {
       font-family: Arial;
       text-align: center;
-      background: linear-gradient(to right, #43cea2, #185a9d);
+      background: linear-gradient(to right, #8360c3, #2ebf91);
       color: white;
     }
     .card {
       background: white;
       color: black;
-      padding: 20px;
+      padding: 25px;
       margin: 40px auto;
       width: 75%;
       border-radius: 15px;
       box-shadow: 0 0 15px gray;
     }
     button {
-      padding: 12px 20px;
-      margin: 8px;
-      cursor: pointer;
+      padding: 12px 18px;
+      margin: 10px;
       border-radius: 8px;
       border: none;
+      cursor: pointer;
       font-weight: bold;
-    }
-    .locked {
-      background: #ccc;
-      cursor: not-allowed;
     }
   </style>
 </head>
 
 <body>
 
-<h1> Tourism Simulation Game</h1>
+<h1> Tourism Decision Simulator</h1>
 <h3>XP: <span id="xp">0</span></h3>
 
 <div class="card">
-  <p>Complete levels to unlock the next stage!</p>
+  <h2 id="scenario"> Start your journey</h2>
 
-  <button id="lvl1" onclick="completeLevel(1)"> Level 1: Basics</button>
-  <button id="lvl2" class="locked"> Level 2: Global</button>
-  <button id="lvl3" class="locked"> Level 3: Climate</button>
-  <button id="lvl4" class="locked"> Level 4: Culture</button>
-  <button id="lvl5" class="locked"> Level 5: Development</button>
-  <button id="lvl6" class="locked"> Level 6: Sustainability</button>
+  <button onclick="startGame()">Start Game</button>
 
-  <h2 id="result"> Start Level 1</h2>
+  <div id="choices"></div>
 </div>
 
 <script>
 let xp = 0;
 
-function completeLevel(level) {
-
-  if(level === 1) {
-    xp += 10;
-    document.getElementById("lvl2").classList.remove("locked");
-    document.getElementById("lvl2").onclick = function(){completeLevel(2)};
-    document.getElementById("result").innerHTML = " Basics mastered! +10 XP";
-  }
-
-  else if(level === 2) {
-    xp += 15;
-    document.getElementById("lvl3").classList.remove("locked");
-    document.getElementById("lvl3").onclick = function(){completeLevel(3)};
-    document.getElementById("result").innerHTML = " Global strategy success! +15 XP";
-  }
-
-  else if(level === 3) {
-    xp += 15;
-    document.getElementById("lvl4").classList.remove("locked");
-    document.getElementById("lvl4").onclick = function(){completeLevel(4)};
-    document.getElementById("result").innerHTML = " Climate decision learned! +15 XP";
-  }
-
-  else if(level === 4) {
-    xp += 20;
-    document.getElementById("lvl5").classList.remove("locked");
-    document.getElementById("lvl5").onclick = function(){completeLevel(5)};
-    document.getElementById("result").innerHTML = " Culture strategy worked! +20 XP";
-  }
-
-  else if(level === 5) {
-    xp += 20;
-    document.getElementById("lvl6").classList.remove("locked");
-    document.getElementById("lvl6").onclick = function(){completeLevel(6)};
-    document.getElementById("result").innerHTML = " Development mastered! +20 XP";
-  }
-
-  else if(level === 6) {
-    xp += 30;
-    document.getElementById("result").innerHTML =
-    " Sustainability achieved!  YOU WIN ";
-  }
-
+function updateXP(points) {
+  xp += points;
   document.getElementById("xp").innerHTML = xp;
+}
+
+function startGame() {
+  document.getElementById("scenario").innerHTML =
+  "Level 1: You are planning tourism in Langkawi. What do you promote?";
+
+  document.getElementById("choices").innerHTML =
+  '<button onclick="beach()"> Mass Beach Tourism</button>' +
+  '<button onclick="eco()"> Eco Tourism</button>';
+}
+
+function beach() {
+  updateXP(5);
+  document.getElementById("scenario").innerHTML =
+  "Tourists increased fast, but pollution rises. Next step?";
+
+  document.getElementById("choices").innerHTML =
+  '<button onclick="expand()"> Expand more</button>' +
+  '<button onclick="control()"> Control development</button>';
+}
+
+function eco() {
+  updateXP(10);
+  document.getElementById("scenario").innerHTML =
+  "Slower growth but sustainable success. Next step?";
+
+  document.getElementById("choices").innerHTML =
+  '<button onclick="market()"> Promote globally</button>' +
+  '<button onclick="local()"> Focus local tourism</button>';
+}
+
+function expand() {
+  updateXP(5);
+  endGame(" Overdevelopment! Environment damaged.");
+}
+
+function control() {
+  updateXP(10);
+  endGame(" Balanced tourism achieved!");
+}
+
+function market() {
+  updateXP(10);
+  endGame(" International success!");
+}
+
+function local() {
+  updateXP(8);
+  endGame(" Strong domestic tourism!");
+}
+
+function endGame(message) {
+  document.getElementById("scenario").innerHTML = message + "  GAME OVER";
+  document.getElementById("choices").innerHTML =
+  '<button onclick="restart()"> Play Again</button>';
+}
+
+function restart() {
+  xp = 0;
+  document.getElementById("xp").innerHTML = xp;
+  document.getElementById("scenario").innerHTML = " Start your journey";
+  document.getElementById("choices").innerHTML =
+  '<button onclick="startGame()">Start Game</button>';
 }
 </script>
 
